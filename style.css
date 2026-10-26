@@ -8,66 +8,99 @@ body {
   text-align: center;
 }
 
+::selection {
+  background: #eee;
+  color: #1c1c1e;
+}
+
 .container {
   max-width: 560px;
   margin: 0 auto;
-  padding: 80px 20px;
+  padding: 100px 20px 60px;
 }
 
 .label {
-  color: #888;
+  margin: 0 0 12px;
+  color: #777;
   font-size: 12px;
   letter-spacing: 4px;
   text-transform: uppercase;
 }
 
 h1 {
-  margin: 0;
+  margin: 0 0 16px;
   font-size: 44px;
+  line-height: 1.2;
   text-transform: uppercase;
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .sub {
+  margin: 0;
   color: #999;
 }
 
 .about {
+  max-width: 440px;
+  margin: 20px auto 0;
   color: #777;
 }
 
 h2 {
-  margin-top: 60px;
-  color: #888;
+  margin: 70px 0 24px;
+  color: #666;
   font-size: 12px;
   font-weight: normal;
+  letter-spacing: 2px;
+}
+
+details {
+  margin-bottom: 12px;
 }
 
 summary {
   display: inline-block;
-  margin-bottom: 10px;
   cursor: pointer;
   border-bottom: 1px solid #444;
+  transition: border-color 0.2s, text-shadow 0.2s;
+}
+
+summary::after {
+  content: " +";
+  color: #666;
+}
+
+details[open] summary::after {
+  content: " -";
+}
+
+details[open] {
+  margin-bottom: 28px;
 }
 
 details p {
+  max-width: 400px;
+  margin: 8px auto;
   color: #999;
   font-size: 13px;
 }
 
 .job {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .job span {
   display: block;
-  color: #777;
+  color: #666;
   font-size: 13px;
 }
 
 .stack {
+  max-width: 420px;
+  margin: 0 auto;
   color: #999;
   font-size: 13px;
+  line-height: 2;
 }
 
 a {
@@ -75,19 +108,39 @@ a {
   text-decoration: none;
   border-bottom: 1px solid #444;
   margin: 0 10px;
+  transition: border-color 0.2s, text-shadow 0.2s;
 }
 
 a:hover,
 summary:hover {
   border-color: #eee;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .links {
-  margin-top: 60px;
+  margin-top: 70px;
+}
+
+footer {
+  margin-top: 50px;
+  color: #555;
+  font-size: 12px;
 }
 
 @media (max-width: 500px) {
+  .container {
+    padding-top: 70px;
+  }
+
   h1 {
-    font-size: 30px;
+    font-size: 28px;
+  }
+
+  h2 {
+    margin-top: 56px;
+  }
+
+  .links a {
+    margin: 0 6px;
   }
 }

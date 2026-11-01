@@ -1,0 +1,175 @@
+/* blog list */
+
+.posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.posts li {
+  margin-bottom: 22px;
+}
+
+.posts a {
+  margin: 0;
+}
+
+.posts span {
+  display: block;
+  color: #666;
+  font-size: 13px;
+}
+
+.back {
+  display: inline-block;
+  margin: 0 0 40px;
+  font-size: 13px;
+}
+
+/* single post */
+
+.post {
+  max-width: 680px;
+  text-align: left;
+}
+
+.post header {
+  text-align: center;
+}
+
+.post h1 {
+  font-size: 28px;
+  text-transform: none;
+}
+
+.post .date {
+  color: #666;
+  font-size: 13px;
+}
+
+.post h2 {
+  margin: 60px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #333;
+  color: #eee;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0;
+}
+
+.post h3 {
+  margin: 36px 0 8px;
+  font-size: 15px;
+}
+
+.post p,
+.post li {
+  color: #bbb;
+}
+
+.post ul,
+.post ol {
+  padding-left: 24px;
+}
+
+.post a {
+  margin: 0;
+}
+
+.post .back {
+  margin-bottom: 40px;
+}
+
+.post code {
+  padding: 1px 5px;
+  background: #2a2a2d;
+  font-size: 13px;
+}
+
+.post pre {
+  overflow-x: auto;
+  padding: 14px 16px;
+  background: #141415;
+  border: 1px solid #333;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.post pre code {
+  padding: 0;
+  background: none;
+}
+
+.post table {
+  width: 100%;
+  margin: 16px 0;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.post th,
+.post td {
+  padding: 8px 10px;
+  border: 1px solid #333;
+  text-align: left;
+  vertical-align: top;
+}
+
+.post th {
+  background: #2a2a2d;
+}
+
+.post td {
+  color: #bbb;
+}
+
+.post img {
+  max-width: 100%;
+  border: 1px solid #333;
+}
+
+.post .note {
+  padding: 12px 16px;
+  border-left: 2px solid #eee;
+  background: #232325;
+}
+
+.post .tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 0 6px;
+  border: 1px solid #555;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.checklist {
+  padding-left: 0 !important;
+  list-style: none;
+}
+
+.checklist label {
+  cursor: pointer;
+}
+
+.checklist input {
+  margin-right: 8px;
+  accent-color: #eee;
+}
+
+.checklist input:checked + span {
+  color: #666;
+  text-decoration: line-through;
+}
+
+@media (max-width: 500px) {
+  .post h1 {
+    font-size: 22px;
+  }
+
+  .post pre,
+  .post table {
+    font-size: 12px;
+  }
+}

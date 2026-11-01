@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>50 DNS Interview Questions &amp; Answers · Rezwan Hossain</title>
+    <meta
+      name="description"
+      content="50 DNS interview questions with clear, simple answers."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="blog.css" />
+  </head>
+  <body>
+    <article class="container post">
+      <header>
+        <a class="back" href="index.html">← all posts</a>
+        <h1>50 DNS Interview Questions &amp; Answers</h1>
+        <p class="date">Nov 1, 2026</p>
+      </header>
+
+      <p>
+        I made this list while preparing for network and sysadmin interviews.
+        Clear answers, easy words. Hope it helps.
+      </p>
+
+      <h2>Basics</h2>
+
+      <h3>1. What is DNS?</h3>
+      <p>
+        DNS stands for Domain Name System. It translates domain names like
+        google.com into IP addresses, because computers talk to each other
+        using IPs, not names.
+      </p>
+
+      <h3>2. What happens when you type google.com in a browser?</h3>
+      <p>
+        First the browser checks its own cache. Then the OS checks the hosts
+        file and its cache. If there's no answer, the PC asks its DNS server.
+        That server asks the root server, then the .com server, then Google's
+        own DNS server, and gets the IP. Finally the browser connects to that
+        IP.
+      </p>
+
+      <h3>3. What is a recursive DNS server?</h3>
+      <p>
+        It's the DNS server your computer asks for answers. It does all the
+        work of finding the IP and caches the result for next time. Examples
+        are 8.8.8.8 or your company's DNS server.
+      </p>
+
+      <h3>4. What is an authoritative DNS server?</h3>
+      <p>
+        It's the server that holds the real DNS records for a domain. When it
+        answers, that answer is final. For example, Cloudflare or Route 53
+        can be the authoritative server for your domain.
+      </p>
+
+      <h3>5. What is the difference between a recursive and an iterative query?</h3>
+      <p>
+        In a recursive query, the client asks for the final answer and the
+        server must find it. In an iterative query, the server gives the best
+        answer it has, or tells you which server to ask next.
+      </p>
+
+      <h3>6. Which port does DNS use?</h3>
+      <p>
+        DNS uses port 53. It uses UDP for normal queries because it's fast,
+        and TCP for zone transfers and answers that are too big for UDP.
+      </p>
+
+      <h3>7. What is the hosts file?</h3>
+      <p>
+        The hosts file is a local file that maps names to IP addresses. The
+        computer checks it before asking DNS, so an entry here overrides DNS.
+      </p>
+      <p>Location:</p>
+      <pre><code>Windows: C:\Windows\System32\drivers\etc\hosts
+Linux:   /etc/hosts</code></pre>
+
+      <h3>8. What is the difference between DNS and DHCP?</h3>
+      <p>
+        DHCP gives a computer its IP address, gateway and DNS server. DNS
+        translates names into IP addresses. DHCP uses UDP ports 67 and 68,
+        and DNS uses port 53.
+      </p>
+
+      <h3>9. What is TTL?</h3>
+      <p>
+        TTL means Time To Live. It tells DNS servers how long they can cache a
+        record, in seconds. For example, a TTL of 3600 means one hour.
+      </p>
+
+      <h3>10. What is DNS propagation?</h3>
+      <p>
+        DNS propagation is the time it takes for a DNS change to be seen
+        everywhere. It happens because servers keep the old record in cache
+        until its TTL expires.
+      </p>
+
+      <h2>Records</h2>
+
+      <h3>11. What is an A record?</h3>
+      <p>An A record maps a domain name to an IPv4 address.</p>
+      <p>Example:</p>
+      <pre><code>Type: A
+Host: @
+Value: 192.0.2.10</code></pre>
+
+      <h3>12. What is an AAAA record?</h3>
+      <p>An AAAA record maps a domain name to an IPv6 address.</p>
+      <p>Example:</p>
+      <pre><code>Type: AAAA
+Host: @
+Value: 2001:db8::10</code></pre>
+
+      <h3>13. What is a CNAME record?</h3>
+      <p>
+        A CNAME record makes one domain name an alias of another name. When
+        someone looks up the alias, DNS follows it to the real name.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: CNAME
+Host: www
+Value: example.com</code></pre>
+
+      <h3>14. Why can't you use a CNAME on the root domain?</h3>
+      <p>
+        A name with a CNAME can't have any other records. The root domain
+        always has NS and SOA records, so a CNAME there would break this rule.
+        Some providers offer "CNAME flattening" to work around it.
+      </p>
+
+      <h3>15. What does @ mean in DNS?</h3>
+      <p>
+        The @ symbol means the root domain itself. For example, if your
+        domain is example.com, a record with host @ applies to example.com.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: A
+Host: @
+Value: 192.0.2.10
+
+This means example.com → 192.0.2.10</code></pre>
+
+      <h3>16. What is an MX record?</h3>
+      <p>
+        An MX record tells other servers where to deliver email for a domain.
+        The number is the priority, and the lower number is tried first.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: MX
+Host: @
+Priority: 10
+Value: mail.example.com</code></pre>
+
+      <h3>17. What is a TXT record used for?</h3>
+      <p>
+        A TXT record stores text in DNS. It's mostly used for email security
+        (SPF, DKIM, DMARC) and for proving you own a domain to services like
+        Google or Microsoft.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: TXT
+Host: @
+Value: v=spf1 include:_spf.google.com ~all</code></pre>
+
+      <h3>18. What is an NS record?</h3>
+      <p>An NS record shows which name servers are authoritative for a domain.</p>
+      <p>Example:</p>
+      <pre><code>Type: NS
+Host: @
+Value: ns1.example.com</code></pre>
+
+      <h3>19. What is a PTR record?</h3>
+      <p>
+        A PTR record is used for reverse DNS. It maps an IP address back to a
+        domain name. Mail servers check it, so a missing PTR can make emails
+        go to spam.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: PTR
+Host: 10.2.0.192.in-addr.arpa
+Value: mail.example.com
+
+This means 192.0.2.10 → mail.example.com</code></pre>
+
+      <h3>20. What is an SOA record?</h3>
+      <p>
+        SOA means Start of Authority. It holds the main settings of a zone,
+        like the primary name server, the admin email, the serial number and
+        refresh timers. The serial number must increase after every change.
+      </p>
+
+      <h3>21. What is an SRV record?</h3>
+      <p>
+        An SRV record points to the server and port for a specific service.
+        Active Directory uses SRV records so computers can find domain
+        controllers.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: SRV
+Host: _ldap._tcp
+Priority: 0
+Weight: 100
+Port: 389
+Value: dc1.example.com</code></pre>
+
+      <h3>22. What is a wildcard record?</h3>
+      <p>
+        A wildcard record like <code>*.example.com</code> matches any
+        subdomain that doesn't have its own record. A real record always wins
+        over the wildcard.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: A
+Host: *
+Value: 192.0.2.10</code></pre>
+
+      <h2>Commands</h2>
+
+      <h3>23. How do you check DNS resolution on Windows?</h3>
+      <p>Use nslookup. It shows which DNS server answered and the IP address it returned.</p>
+      <p>Command:</p>
+      <pre><code>nslookup google.com</code></pre>
+
+      <h3>24. How do you see your DNS server on Windows?</h3>
+      <p>Run ipconfig /all. It shows your DNS servers, IP address, gateway and DHCP details.</p>
+      <p>Command:</p>
+      <pre><code>ipconfig /all</code></pre>
+
+      <h3>25. How do you clear the DNS cache on Windows?</h3>
+      <p>Run this command. It removes all cached DNS answers from your computer.</p>
+      <p>Command:</p>
+      <pre><code>ipconfig /flushdns</code></pre>
+
+      <h3>26. How do you check DNS in PowerShell?</h3>
+      <p>Use Resolve-DnsName. You can also add -Server to ask a specific DNS server.</p>
+      <p>Command:</p>
+      <pre><code>Resolve-DnsName google.com
+Resolve-DnsName google.com -Server 8.8.8.8</code></pre>
+
+      <h3>27. How do you check DNS on Linux?</h3>
+      <p>Use dig. Add +short if you only want the IP address.</p>
+      <p>Command:</p>
+      <pre><code>dig google.com
+dig +short google.com</code></pre>
+
+      <h3>28. How do you check a specific record type, like MX?</h3>
+      <p>Add the record type to the command.</p>
+      <p>Command:</p>
+      <pre><code>dig example.com MX
+nslookup -type=MX example.com</code></pre>
+
+      <h3>29. How do you ask a specific DNS server?</h3>
+      <p>This is useful to compare answers from different servers.</p>
+      <p>Command:</p>
+      <pre><code>dig @8.8.8.8 example.com
+nslookup example.com 8.8.8.8</code></pre>
+
+      <h3>30. How do you do a reverse DNS lookup?</h3>
+      <p>Look up the IP address instead of the name.</p>
+      <p>Command:</p>
+      <pre><code>dig -x 8.8.8.8
+nslookup 8.8.8.8</code></pre>
+
+      <h3>31. What is the difference between NXDOMAIN and SERVFAIL?</h3>
+      <p>
+        NXDOMAIN means the domain name doesn't exist. SERVFAIL means the DNS
+        server tried but couldn't get an answer, so something is broken on
+        the server side.
+      </p>
+
+      <h3>32. Why can nslookup and ping show different IPs?</h3>
+      <p>
+        nslookup asks the DNS server directly. ping uses the OS, which checks
+        the hosts file and local cache first. So if they're different, check
+        the hosts file and flush the cache.
+      </p>
+
+      <h2>Troubleshooting</h2>
+
+      <h3>33. A user can open a site by IP but not by name. What do you check?</h3>
+      <p>
+        This is a DNS problem. I'd check the DNS server with
+        <code>ipconfig /all</code>, test with <code>nslookup</code>, try
+        another server like 8.8.8.8, and flush the DNS cache.
+      </p>
+
+      <h3>34. example.com works, but www.example.com doesn't. Why?</h3>
+      <p>
+        The DNS record for www is probably missing. Add an A record or a CNAME
+        for www. Also check the web server accepts the www name.
+      </p>
+      <p>Example:</p>
+      <pre><code>Type: CNAME
+Host: www
+Value: example.com</code></pre>
+
+      <h3>35. You changed a DNS record, but you still see the old IP. Why?</h3>
+      <p>
+        The old record is still cached. Flush your local cache and wait for
+        the TTL to expire. You can also ask the authoritative server directly
+        to make sure the change was saved.
+      </p>
+
+      <h3>36. How do you handle DNS when moving a website to a new server?</h3>
+      <p>
+        Lower the TTL a day before the move. Then update the A record to the
+        new IP and keep the old server running for a while. When everything
+        works, set the TTL back to normal.
+      </p>
+
+      <h3>37. Internal company sites don't open by name, but the IP works. Why?</h3>
+      <p>
+        The computer is probably using a public DNS server instead of the
+        company DNS server. Check the DNS settings and the DNS suffix on the
+        computer.
+      </p>
+
+      <h3>38. The company DNS server isn't responding. What do you do?</h3>
+      <p>
+        First ping the server to check it's reachable. Then check the DNS
+        service is running, port 53 is open in the firewall, and look at the
+        server logs.
+      </p>
+
+      <h3>39. DNS works with 8.8.8.8 but not with the company DNS server. What does it mean?</h3>
+      <p>
+        The client and network are fine, so the problem is the company DNS
+        server. Check if the service is running and if its forwarders are
+        working.
+      </p>
+
+      <h3>40. The internet works, but Active Directory login fails. Could it be DNS?</h3>
+      <p>
+        Yes, this is very often DNS. Computers find domain controllers using
+        DNS, so they must use the domain controller as their DNS server, not
+        8.8.8.8 or the router.
+      </p>
+      <p>Command:</p>
+      <pre><code>dcdiag /test:dns</code></pre>
+
+      <h3>41. Company emails are going to spam. Which DNS records do you check?</h3>
+      <p>
+        Check the SPF, DKIM and DMARC records, and the PTR record of the mail
+        server. If any of them is missing or wrong, emails can land in spam.
+      </p>
+
+      <h3>42. DNS is down for the whole company. What do you do?</h3>
+      <p>
+        First find out who is affected. Check the DNS servers and the DNS
+        service. If there's a backup DNS server, switch to it so people can
+        work, then find the root cause.
+      </p>
+
+      <h2>Advanced</h2>
+
+      <h3>43. What is a DNS forwarder?</h3>
+      <p>
+        A forwarder is a server your DNS server sends questions to when it
+        doesn't know the answer itself, for example 8.8.8.8 or your ISP's DNS.
+      </p>
+
+      <h3>44. What is a conditional forwarder?</h3>
+      <p>
+        A conditional forwarder sends questions for one specific domain to one
+        specific DNS server. It's useful when two companies or offices need to
+        resolve each other's internal names.
+      </p>
+
+      <h3>45. What is a zone transfer?</h3>
+      <p>
+        A zone transfer copies DNS records from the primary server to a
+        secondary server. AXFR copies the full zone, and IXFR copies only the
+        changes. It should only be allowed to your own servers.
+      </p>
+
+      <h3>46. What is the difference between a primary and a secondary zone?</h3>
+      <p>
+        A primary zone is the main copy where you can add and edit records. A
+        secondary zone is a read-only copy that gets updates from the primary.
+      </p>
+
+      <h3>47. What is split-brain DNS?</h3>
+      <p>
+        Split-brain DNS gives different answers for the same name depending on
+        where you are. For example, inside the office app.example.com points to
+        a private IP, and from the internet it points to a public IP.
+      </p>
+
+      <h3>48. What is DNSSEC?</h3>
+      <p>
+        DNSSEC adds digital signatures to DNS records. It proves the answer
+        really came from the domain owner and wasn't changed. It doesn't
+        encrypt the data.
+      </p>
+
+      <h3>49. What is DNS cache poisoning?</h3>
+      <p>
+        It's an attack where someone puts a fake record into a DNS server's
+        cache. Users who ask that server are then sent to the wrong, often
+        malicious, website.
+      </p>
+
+      <h3>50. What are DoH and DoT?</h3>
+      <p>
+        They are ways to encrypt DNS so others can't see or change your
+        queries. DNS over HTTPS (DoH) uses port 443, and DNS over TLS (DoT)
+        uses port 853.
+      </p>
+
+      <p><a href="index.html">← all posts</a></p>
+    </article>
+  </body>
+</html>
